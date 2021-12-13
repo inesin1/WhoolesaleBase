@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\App.xaml
-11151548125
+310703201
 2-2122833320
-131378292523
+17141474539
 37-1642845624
-MainWindow.xaml;
+LoginWindow.xaml;MainWindow.xaml;UserWindow.xaml;
 
 False
 

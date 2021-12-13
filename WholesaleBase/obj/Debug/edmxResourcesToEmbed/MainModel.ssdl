@@ -42,6 +42,15 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <Association Name="FK__Category">
     <End Role="category" Type="Self.category" Multiplicity="1" />
     <End Role="product" Type="Self.product" Multiplicity="*" />
@@ -72,6 +81,7 @@
     <EntitySet Name="manager" EntityType="Self.manager" Schema="is-31-nesina" store:Type="Tables" />
     <EntitySet Name="product" EntityType="Self.product" Schema="is-31-nesina" store:Type="Tables" />
     <EntitySet Name="units" EntityType="Self.units" Schema="is-31-nesina" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="is-31-nesina" store:Type="Tables" />
     <AssociationSet Name="FK__Category" Association="Self.FK__Category">
       <End Role="category" EntitySet="category" />
       <End Role="product" EntitySet="product" />

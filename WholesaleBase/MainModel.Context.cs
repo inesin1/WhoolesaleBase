@@ -30,5 +30,6 @@ namespace WholesaleBase
         public virtual DbSet<manager> managers { get; set; }
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<unit> units { get; set; }
+        public virtual DbSet<user> users { get; set; }
     }
 }

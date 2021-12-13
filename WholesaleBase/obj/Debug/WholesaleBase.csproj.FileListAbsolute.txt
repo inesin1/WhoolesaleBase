@@ -43,3 +43,7 @@ C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\WholesaleBase.
 C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\WholesaleBase.csproj.CopyComplete
 C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\WholesaleBase.exe
 C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\WholesaleBase.pdb
+C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\LoginWindow.g.cs
+C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\LoginWindow.baml
+C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\UserWindow.g.cs
+C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\UserWindow.baml

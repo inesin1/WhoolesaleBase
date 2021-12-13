@@ -12,6 +12,7 @@
         <EntityTypeShape EntityType="productDataModel.unit" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <AssociationConnector Association="productDataModel.FK__Category" ManuallyRouted="false" />
         <AssociationConnector Association="productDataModel.FK__Unit" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="productDataModel.user" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
