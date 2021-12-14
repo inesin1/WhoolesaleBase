@@ -13,6 +13,15 @@
         <AssociationConnector Association="productDataModel.FK__Category" ManuallyRouted="false" />
         <AssociationConnector Association="productDataModel.FK__Unit" ManuallyRouted="false" />
         <EntityTypeShape EntityType="productDataModel.user" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="productDataModel.order" Width="1.5" PointX="7.25" PointY="3.25" />
+        <EntityTypeShape EntityType="productDataModel.sales_invoice" Width="1.5" PointX="9.5" PointY="3.125" />
+        <AssociationConnector Association="productDataModel.FK__Buyer" />
+        <AssociationConnector Association="productDataModel.FK__Manager" />
+        <AssociationConnector Association="productDataModel.FK__ProductAmount" />
+        <AssociationConnector Association="productDataModel.FK__ProductName" />
+        <AssociationConnector Association="productDataModel.FK_sales_invoice_order" />
+        <AssociationConnector Association="productDataModel.FK_sales_invoice_order_2" />
+        <AssociationConnector Association="productDataModel.FK_sales_invoice_order_3" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

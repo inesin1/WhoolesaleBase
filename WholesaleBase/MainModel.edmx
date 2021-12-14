@@ -30,6 +30,16 @@
           <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Buyer" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="int" Nullable="false" />
+          <Property Name="ProductAmount" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="product">
           <Key>
             <PropertyRef Name="ID" />
@@ -39,6 +49,20 @@
           <Property Name="Unit" Type="int" Nullable="false" />
           <Property Name="Category" Type="int" Nullable="false" />
           <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sales_invoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Buyer" Type="int" Nullable="false" />
+          <Property Name="Manager" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="int" Nullable="false" />
+          <Property Name="ProductUnitPrice" Type="int" Nullable="false" />
+          <Property Name="ProductAmount" Type="int" Nullable="false" />
+          <Property Name="ProductCost" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="TotalCost" Type="decimal" Precision="10" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="units">
           <Key>
@@ -56,6 +80,18 @@
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Buyer">
+          <End Role="buyer" Type="Self.buyer" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="buyer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Category">
           <End Role="category" Type="Self.category" Multiplicity="1" />
           <End Role="product" Type="Self.product" Multiplicity="*" />
@@ -65,6 +101,42 @@
             </Principal>
             <Dependent Role="product">
               <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Manager">
+          <End Role="manager" Type="Self.manager" Multiplicity="1" />
+          <End Role="sales_invoice" Type="Self.sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="manager">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="Manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductAmount">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="sales_invoice" Type="Self.sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="ProductAmount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductName">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="ProductName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -80,20 +152,86 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_sales_invoice_order">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="sales_invoice" Type="Self.sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="ProductName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_invoice_order_2">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="sales_invoice" Type="Self.sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_invoice_order_3">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="sales_invoice" Type="Self.sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="ProductUnitPrice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище productDataModelContainer">
           <EntitySet Name="buyer" EntityType="Self.buyer" Schema="is-31-nesina" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="is-31-nesina" store:Type="Tables" />
           <EntitySet Name="manager" EntityType="Self.manager" Schema="is-31-nesina" store:Type="Tables" />
+          <EntitySet Name="order" EntityType="Self.order" Schema="is-31-nesina" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="is-31-nesina" store:Type="Tables" />
+          <EntitySet Name="sales_invoice" EntityType="Self.sales_invoice" Schema="is-31-nesina" store:Type="Tables" />
           <EntitySet Name="units" EntityType="Self.units" Schema="is-31-nesina" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="is-31-nesina" store:Type="Tables" />
+          <AssociationSet Name="FK__Buyer" Association="Self.FK__Buyer">
+            <End Role="buyer" EntitySet="buyer" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
           <AssociationSet Name="FK__Category" Association="Self.FK__Category">
             <End Role="category" EntitySet="category" />
             <End Role="product" EntitySet="product" />
           </AssociationSet>
+          <AssociationSet Name="FK__Manager" Association="Self.FK__Manager">
+            <End Role="manager" EntitySet="manager" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductAmount" Association="Self.FK__ProductAmount">
+            <End Role="order" EntitySet="order" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductName" Association="Self.FK__ProductName">
+            <End Role="product" EntitySet="product" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
           <AssociationSet Name="FK__Unit" Association="Self.FK__Unit">
             <End Role="units" EntitySet="units" />
             <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_invoice_order" Association="Self.FK_sales_invoice_order">
+            <End Role="order" EntitySet="order" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_invoice_order_2" Association="Self.FK_sales_invoice_order_2">
+            <End Role="order" EntitySet="order" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_invoice_order_3" Association="Self.FK_sales_invoice_order_3">
+            <End Role="order" EntitySet="order" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -108,6 +246,7 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="productDataModel.FK__Buyer" FromRole="buyer" ToRole="order" />
         </EntityType>
         <EntityType Name="category">
           <Key>
@@ -125,6 +264,7 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="sales_invoice" Relationship="productDataModel.FK__Manager" FromRole="manager" ToRole="sales_invoice" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -137,6 +277,7 @@
           <Property Name="UnitPrice" Type="Decimal" Nullable="false" />
           <NavigationProperty Name="category1" Relationship="Self.FK__Category" FromRole="product" ToRole="category" />
           <NavigationProperty Name="unit1" Relationship="Self.FK__Unit" FromRole="product" ToRole="units" />
+          <NavigationProperty Name="orders" Relationship="productDataModel.FK__ProductName" FromRole="product" ToRole="order" />
         </EntityType>
         <EntityType Name="unit">
           <Key>
@@ -185,6 +326,36 @@
             <End Role="product" EntitySet="products" />
           </AssociationSet>
           <EntitySet Name="users" EntityType="productDataModel.user" />
+          <EntitySet Name="orders" EntityType="productDataModel.order" />
+          <EntitySet Name="sales_invoice" EntityType="productDataModel.sales_invoice" />
+          <AssociationSet Name="FK__Buyer" Association="productDataModel.FK__Buyer">
+            <End Role="buyer" EntitySet="buyers" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Manager" Association="productDataModel.FK__Manager">
+            <End Role="manager" EntitySet="managers" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductAmount" Association="productDataModel.FK__ProductAmount">
+            <End Role="order" EntitySet="orders" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductName" Association="productDataModel.FK__ProductName">
+            <End Role="product" EntitySet="products" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_invoice_order" Association="productDataModel.FK_sales_invoice_order">
+            <End Role="order" EntitySet="orders" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_invoice_order_2" Association="productDataModel.FK_sales_invoice_order_2">
+            <End Role="order" EntitySet="orders" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_invoice_order_3" Association="productDataModel.FK_sales_invoice_order_3">
+            <End Role="order" EntitySet="orders" />
+            <End Role="sales_invoice" EntitySet="sales_invoice" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="user">
           <Key>
@@ -195,6 +366,125 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Buyer" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="Int32" Nullable="false" />
+          <Property Name="ProductAmount" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="buyer1" Relationship="productDataModel.FK__Buyer" FromRole="order" ToRole="buyer" />
+          <NavigationProperty Name="sales_invoice" Relationship="productDataModel.FK__ProductAmount" FromRole="order" ToRole="sales_invoice" />
+          <NavigationProperty Name="product" Relationship="productDataModel.FK__ProductName" FromRole="order" ToRole="product" />
+          <NavigationProperty Name="sales_invoice1" Relationship="productDataModel.FK_sales_invoice_order" FromRole="order" ToRole="sales_invoice" />
+          <NavigationProperty Name="sales_invoice2" Relationship="productDataModel.FK_sales_invoice_order_2" FromRole="order" ToRole="sales_invoice" />
+          <NavigationProperty Name="sales_invoice3" Relationship="productDataModel.FK_sales_invoice_order_3" FromRole="order" ToRole="sales_invoice" />
+        </EntityType>
+        <EntityType Name="sales_invoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Buyer" Type="Int32" Nullable="false" />
+          <Property Name="Manager" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="Int32" Nullable="false" />
+          <Property Name="ProductUnitPrice" Type="Int32" Nullable="false" />
+          <Property Name="ProductAmount" Type="Int32" Nullable="false" />
+          <Property Name="ProductCost" Type="Decimal" Nullable="false" />
+          <Property Name="TotalCost" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="manager1" Relationship="productDataModel.FK__Manager" FromRole="sales_invoice" ToRole="manager" />
+          <NavigationProperty Name="order" Relationship="productDataModel.FK__ProductAmount" FromRole="sales_invoice" ToRole="order" />
+          <NavigationProperty Name="order1" Relationship="productDataModel.FK_sales_invoice_order" FromRole="sales_invoice" ToRole="order" />
+          <NavigationProperty Name="order2" Relationship="productDataModel.FK_sales_invoice_order_2" FromRole="sales_invoice" ToRole="order" />
+          <NavigationProperty Name="order3" Relationship="productDataModel.FK_sales_invoice_order_3" FromRole="sales_invoice" ToRole="order" />
+        </EntityType>
+        <Association Name="FK__Buyer">
+          <End Type="productDataModel.buyer" Role="buyer" Multiplicity="1" />
+          <End Type="productDataModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="buyer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Manager">
+          <End Type="productDataModel.manager" Role="manager" Multiplicity="1" />
+          <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="manager">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="Manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductAmount">
+          <End Type="productDataModel.order" Role="order" Multiplicity="1" />
+          <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="ProductAmount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductName">
+          <End Type="productDataModel.product" Role="product" Multiplicity="1" />
+          <End Type="productDataModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="ProductName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_invoice_order">
+          <End Type="productDataModel.order" Role="order" Multiplicity="1" />
+          <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="ProductName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_invoice_order_2">
+          <End Type="productDataModel.order" Role="order" Multiplicity="1" />
+          <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_invoice_order_3">
+          <End Type="productDataModel.order" Role="order" Multiplicity="1" />
+          <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="sales_invoice">
+              <PropertyRef Name="ProductUnitPrice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -254,6 +544,32 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="productDataModel.order">
+              <MappingFragment StoreEntitySet="order">
+                <ScalarProperty Name="ProductAmount" ColumnName="ProductAmount" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Buyer" ColumnName="Buyer" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales_invoice">
+            <EntityTypeMapping TypeName="productDataModel.sales_invoice">
+              <MappingFragment StoreEntitySet="sales_invoice">
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="ProductCost" ColumnName="ProductCost" />
+                <ScalarProperty Name="ProductAmount" ColumnName="ProductAmount" />
+                <ScalarProperty Name="ProductUnitPrice" ColumnName="ProductUnitPrice" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="Buyer" ColumnName="Buyer" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

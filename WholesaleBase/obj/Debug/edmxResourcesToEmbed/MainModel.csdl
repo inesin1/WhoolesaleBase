@@ -8,6 +8,7 @@
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="orders" Relationship="productDataModel.FK__Buyer" FromRole="buyer" ToRole="order" />
   </EntityType>
   <EntityType Name="category">
     <Key>
@@ -25,6 +26,7 @@
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="sales_invoice" Relationship="productDataModel.FK__Manager" FromRole="manager" ToRole="sales_invoice" />
   </EntityType>
   <EntityType Name="product">
     <Key>
@@ -37,6 +39,7 @@
     <Property Name="UnitPrice" Type="Decimal" Nullable="false" />
     <NavigationProperty Name="category1" Relationship="Self.FK__Category" FromRole="product" ToRole="category" />
     <NavigationProperty Name="unit1" Relationship="Self.FK__Unit" FromRole="product" ToRole="units" />
+    <NavigationProperty Name="orders" Relationship="productDataModel.FK__ProductName" FromRole="product" ToRole="order" />
   </EntityType>
   <EntityType Name="unit">
     <Key>
@@ -85,6 +88,36 @@
       <End Role="product" EntitySet="products" />
     </AssociationSet>
     <EntitySet Name="users" EntityType="productDataModel.user" />
+    <EntitySet Name="orders" EntityType="productDataModel.order" />
+    <EntitySet Name="sales_invoice" EntityType="productDataModel.sales_invoice" />
+    <AssociationSet Name="FK__Buyer" Association="productDataModel.FK__Buyer">
+      <End Role="buyer" EntitySet="buyers" />
+      <End Role="order" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Manager" Association="productDataModel.FK__Manager">
+      <End Role="manager" EntitySet="managers" />
+      <End Role="sales_invoice" EntitySet="sales_invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductAmount" Association="productDataModel.FK__ProductAmount">
+      <End Role="order" EntitySet="orders" />
+      <End Role="sales_invoice" EntitySet="sales_invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductName" Association="productDataModel.FK__ProductName">
+      <End Role="product" EntitySet="products" />
+      <End Role="order" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sales_invoice_order" Association="productDataModel.FK_sales_invoice_order">
+      <End Role="order" EntitySet="orders" />
+      <End Role="sales_invoice" EntitySet="sales_invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sales_invoice_order_2" Association="productDataModel.FK_sales_invoice_order_2">
+      <End Role="order" EntitySet="orders" />
+      <End Role="sales_invoice" EntitySet="sales_invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sales_invoice_order_3" Association="productDataModel.FK_sales_invoice_order_3">
+      <End Role="order" EntitySet="orders" />
+      <End Role="sales_invoice" EntitySet="sales_invoice" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="user">
     <Key>
@@ -95,4 +128,123 @@
     <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="order">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" />
+    <Property Name="Buyer" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="Int32" Nullable="false" />
+    <Property Name="ProductAmount" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="buyer1" Relationship="productDataModel.FK__Buyer" FromRole="order" ToRole="buyer" />
+    <NavigationProperty Name="sales_invoice" Relationship="productDataModel.FK__ProductAmount" FromRole="order" ToRole="sales_invoice" />
+    <NavigationProperty Name="product" Relationship="productDataModel.FK__ProductName" FromRole="order" ToRole="product" />
+    <NavigationProperty Name="sales_invoice1" Relationship="productDataModel.FK_sales_invoice_order" FromRole="order" ToRole="sales_invoice" />
+    <NavigationProperty Name="sales_invoice2" Relationship="productDataModel.FK_sales_invoice_order_2" FromRole="order" ToRole="sales_invoice" />
+    <NavigationProperty Name="sales_invoice3" Relationship="productDataModel.FK_sales_invoice_order_3" FromRole="order" ToRole="sales_invoice" />
+  </EntityType>
+  <EntityType Name="sales_invoice">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" />
+    <Property Name="Buyer" Type="Int32" Nullable="false" />
+    <Property Name="Manager" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="Int32" Nullable="false" />
+    <Property Name="ProductUnitPrice" Type="Int32" Nullable="false" />
+    <Property Name="ProductAmount" Type="Int32" Nullable="false" />
+    <Property Name="ProductCost" Type="Decimal" Nullable="false" />
+    <Property Name="TotalCost" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="manager1" Relationship="productDataModel.FK__Manager" FromRole="sales_invoice" ToRole="manager" />
+    <NavigationProperty Name="order" Relationship="productDataModel.FK__ProductAmount" FromRole="sales_invoice" ToRole="order" />
+    <NavigationProperty Name="order1" Relationship="productDataModel.FK_sales_invoice_order" FromRole="sales_invoice" ToRole="order" />
+    <NavigationProperty Name="order2" Relationship="productDataModel.FK_sales_invoice_order_2" FromRole="sales_invoice" ToRole="order" />
+    <NavigationProperty Name="order3" Relationship="productDataModel.FK_sales_invoice_order_3" FromRole="sales_invoice" ToRole="order" />
+  </EntityType>
+  <Association Name="FK__Buyer">
+    <End Type="productDataModel.buyer" Role="buyer" Multiplicity="1" />
+    <End Type="productDataModel.order" Role="order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="buyer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="Buyer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Manager">
+    <End Type="productDataModel.manager" Role="manager" Multiplicity="1" />
+    <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="manager">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sales_invoice">
+        <PropertyRef Name="Manager" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductAmount">
+    <End Type="productDataModel.order" Role="order" Multiplicity="1" />
+    <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sales_invoice">
+        <PropertyRef Name="ProductAmount" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductName">
+    <End Type="productDataModel.product" Role="product" Multiplicity="1" />
+    <End Type="productDataModel.order" Role="order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="ProductName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sales_invoice_order">
+    <End Type="productDataModel.order" Role="order" Multiplicity="1" />
+    <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sales_invoice">
+        <PropertyRef Name="ProductName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sales_invoice_order_2">
+    <End Type="productDataModel.order" Role="order" Multiplicity="1" />
+    <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sales_invoice">
+        <PropertyRef Name="Buyer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sales_invoice_order_3">
+    <End Type="productDataModel.order" Role="order" Multiplicity="1" />
+    <End Type="productDataModel.sales_invoice" Role="sales_invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="sales_invoice">
+        <PropertyRef Name="ProductUnitPrice" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

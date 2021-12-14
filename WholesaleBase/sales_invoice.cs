@@ -12,20 +12,22 @@ namespace WholesaleBase
     using System;
     using System.Collections.Generic;
     
-    public partial class manager
+    public partial class sales_invoice
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public manager()
-        {
-            this.sales_invoice = new HashSet<sales_invoice>();
-        }
-    
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string MiddleName { get; set; }
+        public System.DateTime Date { get; set; }
+        public int Buyer { get; set; }
+        public int Manager { get; set; }
+        public int ProductName { get; set; }
+        public int ProductUnitPrice { get; set; }
+        public int ProductAmount { get; set; }
+        public decimal ProductCost { get; set; }
+        public decimal TotalCost { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sales_invoice> sales_invoice { get; set; }
+        public virtual manager manager1 { get; set; }
+        public virtual order order { get; set; }
+        public virtual order order1 { get; set; }
+        public virtual order order2 { get; set; }
+        public virtual order order3 { get; set; }
     }
 }

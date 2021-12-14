@@ -14,9 +14,18 @@ namespace WholesaleBase
     
     public partial class buyer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public buyer()
+        {
+            this.orders = new HashSet<order>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string MiddleName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order> orders { get; set; }
     }
 }

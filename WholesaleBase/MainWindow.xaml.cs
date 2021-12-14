@@ -23,7 +23,7 @@ namespace WholesaleBase
 
     public enum TableType
     {
-        Products, Units, Category, Managers, Buyers
+        Products, Units, Category, Managers, Buyers, Orders, Sales
     }
 
     public partial class MainWindow : Window
@@ -98,6 +98,30 @@ namespace WholesaleBase
 
                     Views.BuyersView = vs;
                     break;
+                case TableType.Orders:
+                    db.orders.Load();
+
+                    vs.Source = db.orders.Local;
+                    this.orderTable.ItemsSource = vs.View;
+                    this.orderTable.AddingNewItem += (sender, e) => e.NewItem = new order() { Date = DateTime.Now.Date, Buyer = 0, ProductName = 0, ProductAmount = 0 };
+
+                    this.colBuyer.ItemsSource = db.buyers.ToArray();
+                    this.colProductName.ItemsSource = db.products.ToArray();
+
+                    Views.ProductsView = vs;
+                    break;
+                case TableType.Sales:
+                    db.sales_invoice.Load();
+
+                    vs.Source = db.sales_invoice.Local;
+                    this.salesTable.ItemsSource = vs.View;
+                    this.salesTable.AddingNewItem += (sender, e) => e.NewItem = new sales_invoice() { ID = 0, Date = DateTime.Now.Date, Buyer = 0, Manager = 0, ProductName = 0, ProductUnitPrice = 0, ProductAmount = 0, ProductCost = 0, TotalCost = 0 };
+
+                    //this.colID.ItemsSource = db.orders.ToArray();
+                    this.colManager.ItemsSource = db.managers.ToArray();
+
+                    Views.ProductsView = vs;
+                    break;
             }
         }
 
@@ -123,6 +147,12 @@ namespace WholesaleBase
                     break;
                 case TableType.Buyers:
                     currTable = buyersTable;
+                    break;
+                case TableType.Orders:
+                    currTable = orderTable;
+                    break;
+                case TableType.Sales:
+                    currTable = salesTable;
                     break;
             }
 
@@ -154,18 +184,42 @@ namespace WholesaleBase
                 case TableType.Products:
                     if (productsTable.SelectedItem is product b)
                         db.products.Local.Remove(b);
+                    else
+                        MessageBox.Show("Данное комплектующее уже содержится в сборках. Удаление невозможно!",
+                            "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     break;
                 case TableType.Managers:
                     if (managersTable.SelectedItem is manager c)
                         db.managers.Local.Remove(c);
+                    else
+                        MessageBox.Show("Данное комплектующее уже содержится в сборках. Удаление невозможно!",
+                            "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     break;
                 case TableType.Buyers:
                     if (buyersTable.SelectedItem is buyer d)
                         db.buyers.Local.Remove(d);
+                    else
+                        MessageBox.Show("Данное комплектующее уже содержится в сборках. Удаление невозможно!",
+                            "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     break;
+
+                case TableType.Orders:
+                    if (orderTable.SelectedItem is order e)
+                        db.orders.Local.Remove(e);
+                    else
+                        MessageBox.Show("Данное комплектующее уже содержится в сборках. Удаление невозможно!",
+                            "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    break;
+                case TableType.Sales:
+                    if (salesTable.SelectedItem is sales_invoice f)
+                        db.sales_invoice.Local.Remove(f);
+                    else
+                        MessageBox.Show("Данное комплектующее уже содержится в сборках. Удаление невозможно!",
+                            "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    break;
+
             }
         }
-
 
 
         //Кнопки
@@ -184,6 +238,19 @@ namespace WholesaleBase
             DeleteRecord(currentTableType);
         }
 
+        private void UpdataProductCostButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Пересчитываем цены у всех сборок доступных в локальном хранилище
+            foreach (sales_invoice sales in db.sales_invoice.Local)
+                sales.ProductCost = sales.ProductUnitPrice * sales.ProductAmount;
+
+            //Сохраняем на сервер
+            SaveChanges(currentTableType);
+        }
+
+
+
+
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TabItem ti)
@@ -201,6 +268,10 @@ namespace WholesaleBase
                     currentTableType = TableType.Managers;
                 else if (header == "Покупатели")
                     currentTableType = TableType.Buyers;
+                else if (header == "Заказ Покупателя")
+                    currentTableType = TableType.Orders;
+                else if (header == "Расходная Накладная")
+                    currentTableType = TableType.Sales;
 
                 if (currentTableType != old)
                     RefreshTable(currentTableType);
@@ -321,6 +392,60 @@ namespace WholesaleBase
                         }
                     };
                     break;
+                case TableType.Orders:
+                    Views.OrdersView.Filter += (o, ea) =>
+                    {
+                        if (ea.Item is order p)
+                        {
+                            string id = p.ID.ToString();
+                            DateTime date = p.Date;
+                            string buyer = p.Buyer.ToString();
+                            string productName = p.ProductName.ToString();
+
+                            if (id.Contains(orderSearchID.Text.ToLower()) &&
+                                buyer.Contains(orderSearchBuyer.Text.ToLower()) &&
+                                productName.Contains(orderSearchName.Text.ToLower()))
+                            {
+                                ea.Accepted = true;
+                            }
+                            else
+                            {
+                                ea.Accepted = false;
+                            }
+                        }
+                    };
+                    break;
+                case TableType.Sales:
+                    Views.SalesView.Filter += (o, ea) =>
+                    {
+                        if (ea.Item is sales_invoice p)
+                        {
+                            string id = p.ID.ToString();
+                            DateTime date = p.Date;
+                            string buyer = p.Buyer.ToString();
+                            string manager = p.Manager.ToString();
+                            string productName = p.ProductName.ToString();
+                            decimal price = p.ProductCost;
+                            decimal price1 = decimal.Parse(saleSearchPrice1.Text);
+                            decimal price2 = decimal.Parse(saleSearchPrice2.Text);
+
+                            price2 = (price2 == 0 ? 1000000 : price2);
+
+                            if (id.Contains(saleSearchID.Text.ToLower()) &&
+                                buyer.Contains(saleSearchBuyer.Text.ToLower()) &&
+                                manager.Contains(saleSearchManager.Text.ToLower()) &&
+                                productName.Contains(saleSearchName.Text.ToLower()) &&
+                                price.CompareTo(price1) >= 0 && price.CompareTo(price2) <= 0)
+                            {
+                                ea.Accepted = true;
+                            }
+                            else
+                            {
+                                ea.Accepted = false;
+                            }
+                        }
+                    };
+                    break;
             }
         }
 
@@ -361,6 +486,25 @@ namespace WholesaleBase
                     buyerSearchName.Text = "";
                     buyerSearchSurname.Text = "";
                     buyerSearchMiddleName.Text = "";
+                    break;
+                case TableType.Orders:
+                    Views.OrdersView.Filter += (o, ea) => ea.Accepted = true;
+
+                    orderSearchID.Text = "";
+                    orderSearchDate.Text = "";
+                    orderSearchBuyer.Text = "";
+                    orderSearchName.Text = "";
+                    break;
+                case TableType.Sales:
+                    Views.SalesView.Filter += (o, ea) => ea.Accepted = true;
+
+                    saleSearchID.Text = "";
+                    saleSearchDate.Text = "";
+                    saleSearchBuyer.Text = "";
+                    saleSearchManager.Text = "";
+                    saleSearchName.Text = "0";
+                    saleSearchPrice2.Text = "0";
+                    saleSearchPrice2.Text = "0";
                     break;
             }
         }

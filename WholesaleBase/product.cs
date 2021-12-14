@@ -14,6 +14,12 @@ namespace WholesaleBase
     
     public partial class product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public product()
+        {
+            this.orders = new HashSet<order>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public int Unit { get; set; }
@@ -22,5 +28,7 @@ namespace WholesaleBase
     
         public virtual category category1 { get; set; }
         public virtual unit unit1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order> orders { get; set; }
     }
 }

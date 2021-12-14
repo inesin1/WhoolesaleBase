@@ -5,173 +5,284 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WholesaleBase"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="1000">
     <Grid>
         <TabControl>
-            <TabItem Header="Товары" GotFocus="TabItem_GotFocus">
-                <DockPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,10,-35" Height="25" DockPanel.Dock="Top">
-                        <Button Content="Продажи за месяц" Margin="3 0" Width="150"/>
-                        <Button Content="Эффективность" Margin="3 0" Width="150"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="390">
-                        <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
-                        <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/>
-                        <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteRecord_Button"/>
-                    </StackPanel>
-                    <StackPanel Width="200" DockPanel.Dock="Right" Margin="0,0.2,0,0">
-                        <TextBlock Text="Название" Margin="5 0 0 0"/>
-                        <TextBox x:Name="productSearchName" Margin="5px"/>
+            <TabItem Header="Справочники" GotFocus="TabItem_GotFocus">
+                <TabControl>
+                    <TabItem Header="Товары" GotFocus="TabItem_GotFocus">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,10,-35" Height="25" DockPanel.Dock="Top">
+                                <Button Content="Продажи за месяц" Margin="3 0" Width="150"/>
+                                <Button Content="Эффективность" Margin="3 0" Width="150"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="390">
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/>
+                                <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteRecord_Button"/>
+                            </StackPanel>
+                            <StackPanel Width="200" DockPanel.Dock="Right" Margin="0,0.2,0,0">
+                                <TextBlock Text="Название" Margin="5 0 0 0"/>
+                                <TextBox x:Name="productSearchName" Margin="5px"/>
 
-                        <TextBlock Text="Категория" Margin="5 0 0 0"/>
-                        <TextBox x:Name="productSearchCategory" Margin="5px"/>
+                                <TextBlock Text="Категория" Margin="5 0 0 0"/>
+                                <TextBox x:Name="productSearchCategory" Margin="5px"/>
 
-                        <TextBlock Text="Единица измерения" Margin="5 0 0 0"/>
-                        <TextBox x:Name="productSearchUnits" Margin="5px"/>
+                                <TextBlock Text="Единица измерения" Margin="5 0 0 0"/>
+                                <TextBox x:Name="productSearchUnits" Margin="5px"/>
 
-                        <TextBlock Text="Цена за единицу" Margin="5"/>
-                        <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
-                            <TextBlock Text="От: "/>
-                            <TextBox x:Name="productSearchPrice1" Width="50" Text="0"
+                                <TextBlock Text="Цена за единицу" Margin="5"/>
+                                <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
+                                    <TextBlock Text="От: "/>
+                                    <TextBox x:Name="productSearchPrice1" Width="50" Text="0"
                                 PreviewTextInput="SearchOnlyDigits_PreviewTextInput" 
                                 LostFocus="SearchPrice_LostFocus"/>
-                            <TextBlock Text=" До: "/>
-                            <TextBox x:Name="productSearchPrice2" Width="50" Text="0"
+                                    <TextBlock Text=" До: "/>
+                                    <TextBox x:Name="productSearchPrice2" Width="50" Text="0"
                                 PreviewTextInput="SearchOnlyDigits_PreviewTextInput" 
                                 LostFocus="SearchPrice_LostFocus"/>
-                        </StackPanel>
+                                </StackPanel>
 
-                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
-                        <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
-                    </StackPanel>
+                                <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                                <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                            </StackPanel>
 
-                    <DataGrid x:Name="productsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
-                            <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
-                            <DataGridComboBoxColumn x:Name="colCategory" Header="Категория"
+                            <DataGrid x:Name="productsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
+                                    <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
+                                    <DataGridComboBoxColumn x:Name="colCategory" Header="Категория"
                     DisplayMemberPath="Name"
                     SelectedValuePath="ID" 
                     SelectedValueBinding="{Binding Path=Category}" 
                     Width="100"/>
-                            <DataGridComboBoxColumn x:Name="colUnit" Header="Единица измерения" 
+                                    <DataGridComboBoxColumn x:Name="colUnit" Header="Единица измерения" 
                     DisplayMemberPath="Name" 
                     SelectedValuePath="ID" 
                     SelectedValueBinding="{Binding Path=Unit}" 
                     Width="120"/>
-                            <DataGridTextColumn Header="Цена за единицу" Width="110" Binding="{Binding Path=UnitPrice}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
+                                    <DataGridTextColumn Header="Цена за единицу" Width="110" Binding="{Binding Path=UnitPrice}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Категории" GotFocus="TabItem_GotFocus">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150"/>
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150"/>
+                                <Button Content="Удалить" Margin="3 0" Width="70"/>
+                            </StackPanel>
+
+                            <StackPanel Width="200" DockPanel.Dock="Right">
+                                <TextBlock Text="Название" Margin="5 0 0 0"/>
+                                <TextBox x:Name="categorySearchName" Margin="5px"/>
+
+                                <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                                <Button Content="Очистить поле" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                            </StackPanel>
+
+                            <DataGrid x:Name="categoryTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
+                                    <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Единицы измерения" GotFocus="TabItem_GotFocus">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150"/>
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150"/>
+                                <Button Content="Удалить" Margin="3 0" Width="70"/>
+                            </StackPanel>
+
+                            <StackPanel Width="200" DockPanel.Dock="Right">
+                                <TextBlock Text="Название" Margin="5 0 0 0"/>
+                                <TextBox x:Name="unitSearchName" Margin="5px"/>
+
+                                <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                                <Button Content="Очистить поле" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                            </StackPanel>
+
+                            <DataGrid x:Name="unitsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
+                                    <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Покупатели" GotFocus="TabItem_GotFocus">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150"/>
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150"/>
+                                <Button Content="Удалить" Margin="3 0" Width="70"/>
+                            </StackPanel>
+
+                            <StackPanel Width="200" DockPanel.Dock="Right">
+                                <TextBlock Text="Фамилия" Margin="5 0 0 0"/>
+                                <TextBox x:Name="buyerSearchSurname" Margin="5px"/>
+                                <TextBlock Text="Имя" Margin="5 0 0 0"/>
+                                <TextBox x:Name="buyerSearchName" Margin="5px"/>
+                                <TextBlock Text="Отчество" Margin="5 0 0 0"/>
+                                <TextBox x:Name="buyerSearchMiddleName" Margin="5px"/>
+
+                                <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                                <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                            </StackPanel>
+
+                            <DataGrid x:Name="buyersTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
+                                    <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Path=Surname}"/>
+                                    <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Path=Name}"/>
+                                    <DataGridTextColumn Header="Отчество" Width="*" Binding="{Binding Path=MiddleName}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Менеджеры" GotFocus="TabItem_GotFocus">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150"/>
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150"/>
+                                <Button Content="Удалить" Margin="3 0" Width="70"/>
+                            </StackPanel>
+
+                            <StackPanel Width="200" DockPanel.Dock="Right">
+                                <TextBlock Text="Фамилия" Margin="5 0 0 0"/>
+                                <TextBox x:Name="managerSearchSurname" Margin="5px"/>
+                                <TextBlock Text="Имя" Margin="5 0 0 0"/>
+                                <TextBox x:Name="managerSearchName" Margin="5px"/>
+                                <TextBlock Text="Отчество" Margin="5 0 0 0"/>
+                                <TextBox x:Name="managerSearchMiddleName" Margin="5px"/>
+
+                                <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                                <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                            </StackPanel>
+
+                            <DataGrid x:Name="managersTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
+                                    <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Path=Surname}"/>
+                                    <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Path=Name}"/>
+                                    <DataGridTextColumn Header="Отчество" Width="*" Binding="{Binding Path=MiddleName}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                </TabControl>
             </TabItem>
-            <TabItem Header="Категории" GotFocus="TabItem_GotFocus">
-                <DockPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
-                        <Button Content="Сохранить изменения" Margin="3 0" Width="150"/>
-                        <Button Content="Отменить изменения" Margin="3 0" Width="150"/>
-                        <Button Content="Удалить" Margin="3 0" Width="70"/>
-                    </StackPanel>
-                    
-                    <StackPanel Width="200" DockPanel.Dock="Right">
-                        <TextBlock Text="Название" Margin="5 0 0 0"/>
-                        <TextBox x:Name="categorySearchName" Margin="5px"/>
+            <TabItem Header="Документы" GotFocus="TabItem_GotFocus">
+                <TabControl>
+                    <TabItem Header="Заказ Покупателя" GotFocus="TabItem_GotFocus">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="390">
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/> 
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
+                                <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteRecord_Button"/>
+                            </StackPanel>
+                            <StackPanel Width="200" DockPanel.Dock="Right" Margin="0,0.2,0,0">
+                                <TextBlock Text="ID" Margin="5 0 0 0"/>
+                                <TextBox x:Name="orderSearchID" Margin="5px"/>
 
-                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
-                        <Button Content="Очистить поле" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
-                    </StackPanel>
+                                <TextBlock Text="Дата" Margin="5 0 0 0"/>
+                                <TextBox x:Name="orderSearchDate" Margin="5px"/>
 
-                    <DataGrid x:Name="categoryTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
-                            <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
+                                <TextBlock Text="Покупатель" Margin="5 0 0 0"/>
+                                <TextBox x:Name="orderSearchBuyer" Margin="5px"/>
+
+                                <TextBlock Text="Наименование" Margin="5"/>
+                                <TextBox x:Name="orderSearchName" Margin="5px"/>
+
+                                <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                                <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                            </StackPanel>
+
+                            <DataGrid x:Name="orderTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Width="60" Binding="{Binding Path=ID}"/>
+                                    <DataGridTextColumn Header="Дата" Width="60" Binding="{Binding Path=Date}"/>
+                                    <DataGridComboBoxColumn x:Name="colBuyer" Header="Покупатель"
+                    DisplayMemberPath="Name"
+                    SelectedValuePath="ID" 
+                    SelectedValueBinding="{Binding Path=Buyer}" 
+                    Width="120"/>
+                                    <DataGridComboBoxColumn x:Name="colProductName" Header="Наименование" 
+                    DisplayMemberPath="Name" 
+                    SelectedValuePath="ID" 
+                    SelectedValueBinding="{Binding Path=ProductName}" 
+                    Width="*"/>
+                                    <DataGridTextColumn Header="Количество" Width="110" Binding="{Binding Path=ProductAmount}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Расходная Накладная" GotFocus="TabItem_GotFocus">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="540">
+                                <Button Content="Обновить цены" Margin="3 0" Width="150" Click="UpdataProductCostButton_Click"/>
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/>
+                                <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteRecord_Button"/>
+                            </StackPanel>
+                            <StackPanel Width="200" DockPanel.Dock="Right" Margin="0,0.2,0,0">
+                                <TextBlock Text="ID" Margin="5 0 0 0"/>
+                                <TextBox x:Name="saleSearchID" Margin="5px"/>
+
+                                <TextBlock Text="Дата" Margin="5 0 0 0"/>
+                                <TextBox x:Name="saleSearchDate" Margin="5px"/>
+
+                                <TextBlock Text="Покупатель" Margin="5 0 0 0"/>
+                                <TextBox x:Name="saleSearchBuyer" Margin="5px"/>
+
+                                <TextBlock Text="Менеджер" Margin="5 0 0 0"/>
+                                <TextBox x:Name="saleSearchManager" Margin="5px"/>
+
+                                <TextBlock Text="Наименование" Margin="5"/>
+                                <TextBox x:Name="saleSearchName" Margin="5px"/>
+
+                                <TextBlock Text="Стоимость" Margin="5"/>
+                                <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
+                                    <TextBlock Text="От: "/>
+                                    <TextBox x:Name="saleSearchPrice1" Width="50" Text="0"
+                                PreviewTextInput="SearchOnlyDigits_PreviewTextInput" 
+                                LostFocus="SearchPrice_LostFocus"/>
+                                    <TextBlock Text=" До: "/>
+                                    <TextBox x:Name="saleSearchPrice2" Width="50" Text="0"
+                                PreviewTextInput="SearchOnlyDigits_PreviewTextInput" 
+                                LostFocus="SearchPrice_LostFocus"/>
+                                </StackPanel>
+
+                                <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                                <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                            </StackPanel>
+
+                            <DataGrid x:Name="salesTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
+                                    <DataGridTextColumn Header="Дата" Width="60" Binding="{Binding Path=Date}"/>
+                                    <DataGridTextColumn Header="Покупатель" Width="110" Binding="{Binding Path=orderTable.Buyer}"/>
+                                    <DataGridComboBoxColumn x:Name="colManager" Header="Менеджер"
+                    DisplayMemberPath="Name"
+                    SelectedValuePath="ID" 
+                    SelectedValueBinding="{Binding Path=Manager}" 
+                    Width="120"/>
+                                    <DataGridTextColumn Header="Наименование" Width="110" Binding="{Binding Path=orderTable.ProductName}"/>
+                                    <DataGridTextColumn Header="Цена за Единицу" Width="110" x:Name="colUnitPrice" Binding="{Binding Path=productsTable.UnitPrice}"/>
+                                    <DataGridTextColumn Header="Количество" Width="110" x:Name="colProductAmount" Binding="{Binding Path=orderTable.ProductAmount}"/>
+                                    <DataGridTextColumn Header="Стоимость" Width="110" x:Name="colProductCost" Binding="{Binding Path=ProductCost}"/>
+                                    <DataGridTextColumn Header="Общая Стоимость" Width="110" Binding="{Binding Path=TotalCost}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                </TabControl>
             </TabItem>
-            <TabItem Header="Единицы измерения" GotFocus="TabItem_GotFocus">
-                <DockPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
-                        <Button Content="Сохранить изменения" Margin="3 0" Width="150"/>
-                        <Button Content="Отменить изменения" Margin="3 0" Width="150"/>
-                        <Button Content="Удалить" Margin="3 0" Width="70"/>
-                    </StackPanel>
-                    
-                    <StackPanel Width="200" DockPanel.Dock="Right">
-                        <TextBlock Text="Название" Margin="5 0 0 0"/>
-                        <TextBox x:Name="unitSearchName" Margin="5px"/>
 
-                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
-                        <Button Content="Очистить поле" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
-                    </StackPanel>
-
-                    <DataGrid x:Name="unitsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
-                            <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Покупатели" GotFocus="TabItem_GotFocus">
-                <DockPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
-                        <Button Content="Сохранить изменения" Margin="3 0" Width="150"/>
-                        <Button Content="Отменить изменения" Margin="3 0" Width="150"/>
-                        <Button Content="Удалить" Margin="3 0" Width="70"/>
-                    </StackPanel>
-
-                    <StackPanel Width="200" DockPanel.Dock="Right">
-                        <TextBlock Text="Фамилия" Margin="5 0 0 0"/>
-                        <TextBox x:Name="buyerSearchSurname" Margin="5px"/>
-                        <TextBlock Text="Имя" Margin="5 0 0 0"/>
-                        <TextBox x:Name="buyerSearchName" Margin="5px"/>
-                        <TextBlock Text="Отчество" Margin="5 0 0 0"/>
-                        <TextBox x:Name="buyerSearchMiddleName" Margin="5px"/>
-
-                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
-                        <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
-                    </StackPanel>
-
-                    <DataGrid x:Name="buyersTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
-                            <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Path=Surname}"/>
-                            <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Path=Name}"/>
-                            <DataGridTextColumn Header="Отчество" Width="*" Binding="{Binding Path=MiddleName}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Менеджеры" GotFocus="TabItem_GotFocus">
-                <DockPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
-                        <Button Content="Сохранить изменения" Margin="3 0" Width="150"/>
-                        <Button Content="Отменить изменения" Margin="3 0" Width="150"/>
-                        <Button Content="Удалить" Margin="3 0" Width="70"/>
-                    </StackPanel>
-
-                    <StackPanel Width="200" DockPanel.Dock="Right">
-                        <TextBlock Text="Фамилия" Margin="5 0 0 0"/>
-                        <TextBox x:Name="managerSearchSurname" Margin="5px"/>
-                        <TextBlock Text="Имя" Margin="5 0 0 0"/>
-                        <TextBox x:Name="managerSearchName" Margin="5px"/>
-                        <TextBlock Text="Отчество" Margin="5 0 0 0"/>
-                        <TextBox x:Name="managerSearchMiddleName" Margin="5px"/>
-
-                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
-                        <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
-                    </StackPanel>
-
-                    <DataGrid x:Name="managersTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
-                            <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Path=Surname}"/>
-                            <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Path=Name}"/>
-                            <DataGridTextColumn Header="Отчество" Width="*" Binding="{Binding Path=MiddleName}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
-            </TabItem>
         </TabControl>
 
     </Grid>

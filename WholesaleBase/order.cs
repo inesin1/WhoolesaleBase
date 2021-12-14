@@ -12,20 +12,32 @@ namespace WholesaleBase
     using System;
     using System.Collections.Generic;
     
-    public partial class manager
+    public partial class order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public manager()
+        public order()
         {
             this.sales_invoice = new HashSet<sales_invoice>();
+            this.sales_invoice1 = new HashSet<sales_invoice>();
+            this.sales_invoice2 = new HashSet<sales_invoice>();
+            this.sales_invoice3 = new HashSet<sales_invoice>();
         }
     
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string MiddleName { get; set; }
+        public System.DateTime Date { get; set; }
+        public int Buyer { get; set; }
+        public int ProductName { get; set; }
+        public decimal ProductAmount { get; set; }
     
+        public virtual buyer buyer1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sales_invoice> sales_invoice { get; set; }
+        public virtual product product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sales_invoice> sales_invoice1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sales_invoice> sales_invoice2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sales_invoice> sales_invoice3 { get; set; }
     }
 }

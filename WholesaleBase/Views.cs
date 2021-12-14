@@ -14,5 +14,7 @@ namespace WholesaleBase
         public static CollectionViewSource UnitsView { get; set; }
         public static CollectionViewSource ManagersView { get; set; }
         public static CollectionViewSource BuyersView { get; set; }
+        public static CollectionViewSource OrdersView { get; set; }
+        public static CollectionViewSource SalesView { get; set; }
     }
 }
