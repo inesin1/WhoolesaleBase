@@ -209,6 +209,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Templates\ПродажиЗаМесяц.docx" />
+    <None Include="Templates\ЭффективностьПредприятия.docx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

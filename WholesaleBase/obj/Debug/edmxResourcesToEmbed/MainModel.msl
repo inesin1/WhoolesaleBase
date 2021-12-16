@@ -61,6 +61,7 @@
     <EntitySetMapping Name="orders">
       <EntityTypeMapping TypeName="productDataModel.order">
         <MappingFragment StoreEntitySet="order">
+          <ScalarProperty Name="ProductUnitPrice" ColumnName="ProductUnitPrice" />
           <ScalarProperty Name="ProductAmount" ColumnName="ProductAmount" />
           <ScalarProperty Name="ProductName" ColumnName="ProductName" />
           <ScalarProperty Name="Buyer" ColumnName="Buyer" />
@@ -80,6 +81,7 @@
           <ScalarProperty Name="Manager" ColumnName="Manager" />
           <ScalarProperty Name="Buyer" ColumnName="Buyer" />
           <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

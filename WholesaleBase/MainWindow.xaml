@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WholesaleBase"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1000">
+        Title="MainWindow" Height="500" Width="1000">
     <Grid>
         <TabControl>
             <TabItem Header="Справочники" GotFocus="TabItem_GotFocus">
@@ -13,6 +13,7 @@
                     <TabItem Header="Товары" GotFocus="TabItem_GotFocus">
                         <DockPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,10,-35" Height="25" DockPanel.Dock="Top">
+                                <TextBlock Text="Отчеты" Margin="5"></TextBlock>
                                 <Button Content="Продажи за месяц" Margin="3 0" Width="150"/>
                                 <Button Content="Эффективность" Margin="3 0" Width="150"/>
                             </StackPanel>
@@ -47,7 +48,7 @@
                                 <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
                             </StackPanel>
 
-                            <DataGrid x:Name="productsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                            <DataGrid x:Name="productsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" HorizontalGridLinesBrush="DarkGray">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
                                     <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
@@ -82,7 +83,7 @@
                                 <Button Content="Очистить поле" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
                             </StackPanel>
 
-                            <DataGrid x:Name="categoryTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                            <DataGrid x:Name="categoryTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" HorizontalGridLinesBrush="DarkGray">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
                                     <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
@@ -106,7 +107,7 @@
                                 <Button Content="Очистить поле" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
                             </StackPanel>
 
-                            <DataGrid x:Name="unitsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
+                            <DataGrid x:Name="unitsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" HorizontalGridLinesBrush="DarkGray">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
                                     <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Name}"/>
@@ -134,7 +135,7 @@
                                 <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
                             </StackPanel>
 
-                            <DataGrid x:Name="buyersTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
+                            <DataGrid x:Name="buyersTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" HorizontalGridLinesBrush="DarkGray">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
                                     <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Path=Surname}"/>
@@ -164,7 +165,7 @@
                                 <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
                             </StackPanel>
 
-                            <DataGrid x:Name="managersTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                            <DataGrid x:Name="managersTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" HorizontalGridLinesBrush="DarkGray">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
                                     <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding Path=Surname}"/>
@@ -180,7 +181,8 @@
                 <TabControl>
                     <TabItem Header="Заказ Покупателя" GotFocus="TabItem_GotFocus">
                         <DockPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="390">
+                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="550">
+                                <Button Content="Обновить таблицу" Margin="3 0" Width="150" Click="UpdateTablesButton_Click"/>
                                 <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/> 
                                 <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
                                 <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteRecord_Button"/>
@@ -202,7 +204,7 @@
                                 <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
                             </StackPanel>
 
-                            <DataGrid x:Name="orderTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                            <DataGrid x:Name="orderTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" HorizontalGridLinesBrush="DarkGray">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Width="60" Binding="{Binding Path=ID}"/>
                                     <DataGridTextColumn Header="Дата" Width="60" Binding="{Binding Path=Date}"/>
@@ -216,6 +218,7 @@
                     SelectedValuePath="ID" 
                     SelectedValueBinding="{Binding Path=ProductName}" 
                     Width="*"/>
+                                    <DataGridTextColumn Header="Цена за единицу" Width="110" Binding="{Binding Path=ProductUnitPrice}"/>
                                     <DataGridTextColumn Header="Количество" Width="110" Binding="{Binding Path=ProductAmount}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -223,10 +226,10 @@
                     </TabItem>
                     <TabItem Header="Расходная Накладная" GotFocus="TabItem_GotFocus">
                         <DockPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="540">
-                                <Button Content="Обновить цены" Margin="3 0" Width="150" Click="UpdataProductCostButton_Click"/>
-                                <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
-                                <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="550">
+                                <Button Content="Обновить таблицу" Margin="3 0" Width="150" Click="UpdateTablesButton_Click"/>
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/> 
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
                                 <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteRecord_Button"/>
                             </StackPanel>
                             <StackPanel Width="200" DockPanel.Dock="Right" Margin="0,0.2,0,0">
@@ -261,21 +264,25 @@
                                 <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
                             </StackPanel>
 
-                            <DataGrid x:Name="salesTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" >
+                            <DataGrid x:Name="salesTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10" HorizontalGridLinesBrush="DarkGray">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Width="25" Binding="{Binding Path=ID}"/>
+                                    <DataGridComboBoxColumn x:Name="colOrderNum" Header="Номер заказа"
+                    DisplayMemberPath="ID"
+                    SelectedValuePath="ID" 
+                    SelectedValueBinding="{Binding Path=OrderNum}" 
+                    Width="100"/>
                                     <DataGridTextColumn Header="Дата" Width="60" Binding="{Binding Path=Date}"/>
-                                    <DataGridTextColumn Header="Покупатель" Width="110" Binding="{Binding Path=orderTable.Buyer}"/>
+                                    <DataGridTextColumn Header="Покупатель" Width="60" Binding="{Binding Path=Buyer}"/>
                                     <DataGridComboBoxColumn x:Name="colManager" Header="Менеджер"
                     DisplayMemberPath="Name"
                     SelectedValuePath="ID" 
                     SelectedValueBinding="{Binding Path=Manager}" 
                     Width="120"/>
-                                    <DataGridTextColumn Header="Наименование" Width="110" Binding="{Binding Path=orderTable.ProductName}"/>
-                                    <DataGridTextColumn Header="Цена за Единицу" Width="110" x:Name="colUnitPrice" Binding="{Binding Path=productsTable.UnitPrice}"/>
-                                    <DataGridTextColumn Header="Количество" Width="110" x:Name="colProductAmount" Binding="{Binding Path=orderTable.ProductAmount}"/>
+                                    <DataGridTextColumn Header="Наименование" Width="110" x:Name="ProductNameSales" Binding="{Binding Path=ProductName}"/>
+                                    <DataGridTextColumn Header="Цена за Единицу" Width="110" x:Name="colUnitPrice" Binding="{Binding Path=ProductUnitPrice}"/>
+                                    <DataGridTextColumn Header="Количество" Width="110" x:Name="colProductAmount" Binding="{Binding Path=ProductAmount}"/>
                                     <DataGridTextColumn Header="Стоимость" Width="110" x:Name="colProductCost" Binding="{Binding Path=ProductCost}"/>
-                                    <DataGridTextColumn Header="Общая Стоимость" Width="110" Binding="{Binding Path=TotalCost}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>

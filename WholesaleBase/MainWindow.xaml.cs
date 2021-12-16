@@ -33,7 +33,7 @@ namespace WholesaleBase
 
         public MainWindow()
         {
-            new LoginWindow().ShowDialog();
+            //new LoginWindow().ShowDialog();
 
             InitializeComponent();
 
@@ -108,19 +108,20 @@ namespace WholesaleBase
                     this.colBuyer.ItemsSource = db.buyers.ToArray();
                     this.colProductName.ItemsSource = db.products.ToArray();
 
-                    Views.ProductsView = vs;
+                    Views.OrdersView = vs;
                     break;
                 case TableType.Sales:
                     db.sales_invoice.Load();
 
                     vs.Source = db.sales_invoice.Local;
                     this.salesTable.ItemsSource = vs.View;
-                    this.salesTable.AddingNewItem += (sender, e) => e.NewItem = new sales_invoice() { ID = 0, Date = DateTime.Now.Date, Buyer = 0, Manager = 0, ProductName = 0, ProductUnitPrice = 0, ProductAmount = 0, ProductCost = 0, TotalCost = 0 };
+                    this.salesTable.AddingNewItem += (sender, e) => e.NewItem = new sales_invoice() { Date = DateTime.Now.Date, Buyer = "<Новый>", Manager = 0, ProductName = "<Новый>", ProductUnitPrice = 1, ProductAmount = 1, ProductCost = 1, TotalCost = 1 };
 
-                    //this.colID.ItemsSource = db.orders.ToArray();
+                    //this.colID = db.orders.ToArray();
                     this.colManager.ItemsSource = db.managers.ToArray();
+                    this.colOrderNum.ItemsSource = db.orders.ToArray();
 
-                    Views.ProductsView = vs;
+                    Views.SalesView = vs;
                     break;
             }
         }
@@ -135,6 +136,7 @@ namespace WholesaleBase
             {
                 case TableType.Products:
                     currTable = productsTable;
+
                     break;
                 case TableType.Category:
                     currTable = categoryTable;
@@ -238,15 +240,27 @@ namespace WholesaleBase
             DeleteRecord(currentTableType);
         }
 
-        private void UpdataProductCostButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateTablesButton_Click(object sender, RoutedEventArgs e)
         {
-            //Пересчитываем цены у всех сборок доступных в локальном хранилище
+            foreach (order order in db.orders.Local)
+            {
+                order.ProductUnitPrice = order.product.UnitPrice;
+            }
+
             foreach (sales_invoice sales in db.sales_invoice.Local)
+            {
+                sales.Buyer = Convert.ToString(sales.order.buyer1.Name);
+                sales.ProductName = sales.order.product.Name;
+                sales.ProductAmount = sales.order.ProductAmount;
+                sales.ProductUnitPrice = sales.order.ProductUnitPrice;
                 sales.ProductCost = sales.ProductUnitPrice * sales.ProductAmount;
+            }
+
 
             //Сохраняем на сервер
             SaveChanges(currentTableType);
         }
+
 
 
 
@@ -518,5 +532,7 @@ namespace WholesaleBase
         {
             if (sender is TextBox tb && tb.Text.Trim() == "") tb.Text = "0";
         }
+
+
     }
 }

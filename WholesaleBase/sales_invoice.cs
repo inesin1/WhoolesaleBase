@@ -15,19 +15,17 @@ namespace WholesaleBase
     public partial class sales_invoice
     {
         public int ID { get; set; }
+        public int OrderNum { get; set; }
         public System.DateTime Date { get; set; }
-        public int Buyer { get; set; }
+        public string Buyer { get; set; }
         public int Manager { get; set; }
-        public int ProductName { get; set; }
-        public int ProductUnitPrice { get; set; }
-        public int ProductAmount { get; set; }
+        public string ProductName { get; set; }
+        public decimal ProductUnitPrice { get; set; }
+        public decimal ProductAmount { get; set; }
         public decimal ProductCost { get; set; }
         public decimal TotalCost { get; set; }
     
         public virtual manager manager1 { get; set; }
         public virtual order order { get; set; }
-        public virtual order order1 { get; set; }
-        public virtual order order2 { get; set; }
-        public virtual order order3 { get; set; }
     }
 }

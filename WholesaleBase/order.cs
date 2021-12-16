@@ -18,9 +18,6 @@ namespace WholesaleBase
         public order()
         {
             this.sales_invoice = new HashSet<sales_invoice>();
-            this.sales_invoice1 = new HashSet<sales_invoice>();
-            this.sales_invoice2 = new HashSet<sales_invoice>();
-            this.sales_invoice3 = new HashSet<sales_invoice>();
         }
     
         public int ID { get; set; }
@@ -28,16 +25,11 @@ namespace WholesaleBase
         public int Buyer { get; set; }
         public int ProductName { get; set; }
         public decimal ProductAmount { get; set; }
+        public decimal ProductUnitPrice { get; set; }
     
         public virtual buyer buyer1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sales_invoice> sales_invoice { get; set; }
         public virtual product product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sales_invoice> sales_invoice1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sales_invoice> sales_invoice2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sales_invoice> sales_invoice3 { get; set; }
+        public virtual ICollection<sales_invoice> sales_invoice { get; set; }
     }
 }
