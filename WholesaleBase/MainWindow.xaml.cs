@@ -117,7 +117,6 @@ namespace WholesaleBase
                     this.salesTable.ItemsSource = vs.View;
                     this.salesTable.AddingNewItem += (sender, e) => e.NewItem = new sales_invoice() { Date = DateTime.Now.Date, Buyer = "<Новый>", Manager = 0, ProductName = "<Новый>", ProductUnitPrice = 1, ProductAmount = 1, ProductCost = 1, TotalCost = 1 };
 
-                    //this.colID = db.orders.ToArray();
                     this.colManager.ItemsSource = db.managers.ToArray();
                     this.colOrderNum.ItemsSource = db.orders.ToArray();
 
@@ -533,6 +532,18 @@ namespace WholesaleBase
             if (sender is TextBox tb && tb.Text.Trim() == "") tb.Text = "0";
         }
 
+        //Создание отчета
+        Report report;
+        private void SalesReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            report = new Report();
+            report.SalesForMonthGen(Views.SalesView.Source as IList<sales_invoice>);
+        }
 
+        private void efficiencyReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            report = new Report();
+            report.SalesForMonthGen(Views.SalesView.Source as IList<sales_invoice>);
+        }
     }
 }

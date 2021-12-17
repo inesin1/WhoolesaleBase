@@ -47,3 +47,6 @@ C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\LoginWindow.g.
 C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\LoginWindow.baml
 C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\UserWindow.g.cs
 C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\UserWindow.baml
+C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\obj\Debug\WholesaleBase.csproj.ResolveComReference.cache
+C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\bin\Debug\Templates\ПродажиЗаМесяц.docx
+C:\Users\artem\source\repos\WholesaleBase\WholesaleBase\bin\Debug\Templates\ЭффективностьПредприятия.docx
