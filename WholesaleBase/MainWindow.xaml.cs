@@ -33,13 +33,13 @@ namespace WholesaleBase
 
         public MainWindow()
         {
-            //new LoginWindow().ShowDialog();
+            new LoginWindow().ShowDialog(); //Окно с авторизацией
 
             InitializeComponent();
 
             db = new DbService();
-            currentTableType = TableType.Products;
-            RefreshTable(currentTableType);
+            currentTableType = TableType.Products; //Изначальной таблицей ставим "Товары"
+            RefreshTable(currentTableType); //Обновляем её
         }
 
         //Методы
@@ -543,7 +543,7 @@ namespace WholesaleBase
         private void efficiencyReportButton_Click(object sender, RoutedEventArgs e)
         {
             report = new Report();
-            report.SalesForMonthGen(Views.SalesView.Source as IList<sales_invoice>);
+            report.efficiencyGen(Views.SalesView.Source as IList<sales_invoice>);
         }
     }
 }

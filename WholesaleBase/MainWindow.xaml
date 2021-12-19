@@ -12,13 +12,9 @@
                 <TabControl>
                     <TabItem Header="Товары" GotFocus="TabItem_GotFocus">
                         <DockPanel>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,10,-35" Height="25" DockPanel.Dock="Top">
-                                <TextBlock Text="Отчеты" Margin="5"></TextBlock>
-                                <Button Content="Эффективность" Margin="3 0" Width="150"/>
-                            </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="390">
-                                <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
-                                <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/>
+                                <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/>
+                                <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
                                 <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteRecord_Button"/>
                             </StackPanel>
                             <StackPanel Width="200" DockPanel.Dock="Right" Margin="0,0.2,0,0">
@@ -180,7 +176,7 @@
                 <TabControl>
                     <TabItem Header="Заказ Покупателя" GotFocus="TabItem_GotFocus">
                         <DockPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="550">
+                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right">
                                 <Button Content="Обновить таблицу" Margin="3 0" Width="150" Click="UpdateTablesButton_Click"/>
                                 <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/> 
                                 <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
@@ -225,9 +221,14 @@
                     </TabItem>
                     <TabItem Header="Расходная Накладная" GotFocus="TabItem_GotFocus">
                         <DockPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right" Width="700">
-                                <Button Content="Эффективность предприятия" Margin="3 0" Width="150" Click="efficiencyReportButton_Click"/>
-                                <Button Content="Продажи за месяц" Margin="3 0" Width="150" Click="SalesReportButton_Click"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,10,10" Height="25" DockPanel.Dock="Top" HorizontalAlignment="Right">
+                                <Border BorderBrush="Gainsboro" BorderThickness="1">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Background="AliceBlue">
+                                        <TextBlock Text="Отчеты" Margin="5"></TextBlock>
+                                        <Button Content="Эффективность предприятия" Margin="3 0" Width="180" Click="efficiencyReportButton_Click"/>
+                                        <Button Content="Продажи за месяц" Margin="3 0" Width="150" Click="SalesReportButton_Click"/>
+                                    </StackPanel>
+                                </Border>
                                 <Button Content="Обновить таблицу" Margin="3 0" Width="150" Click="UpdateTablesButton_Click"/>
                                 <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChanges_Button"/> 
                                 <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="RefreshTable_Button"/>
